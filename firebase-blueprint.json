@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "LeaderboardEntry": {
+      "title": "Leaderboard Entry",
+      "description": "A real-time student leaderboard ranking record representing quiz scores, mastered words, and streak.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the leaderboard record"
+        },
+        "userName": {
+          "type": "string",
+          "description": "Student nickname or display name",
+          "minLength": 1,
+          "maxLength": 30
+        },
+        "score": {
+          "type": "number",
+          "description": "Total cumulative score points earned from quizzes"
+        },
+        "quizzesSolved": {
+          "type": "number",
+          "description": "Number of quizzes successfully solved"
+        },
+        "wordsMastered": {
+          "type": "number",
+          "description": "Number of vocabulary and expressions mastered"
+        },
+        "streak": {
+          "type": "number",
+          "description": "Consecutive days studied"
+        },
+        "tier": {
+          "type": "string",
+          "description": "Achievement tier title e.g. 새싹, 꿈나무, 모험가, 마스터",
+          "maxLength": 30
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of the last score update"
+        }
+      },
+      "required": ["userName", "score", "wordsMastered", "quizzesSolved", "streak", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/leaderboard/{entryId}": {
+      "schema": "LeaderboardEntry",
+      "description": "Collection of all student leaderboard rankings ordered by score"
+    }
+  }
+}

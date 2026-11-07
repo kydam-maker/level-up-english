@@ -59,4 +59,16 @@ export interface UserProgress {
   todayStudiedIds: string[];
 }
 
-export type ActiveTab = 'daily' | 'topics' | 'quiz' | 'my-room';
+export interface LeaderboardEntry {
+  id: string;
+  userName: string;
+  score: number;
+  quizzesSolved: number;
+  wordsMastered: number;
+  streak: number;
+  tier?: string;
+  updatedAt: string;
+  userId?: string;
+}
+
+export type ActiveTab = 'daily' | 'topics' | 'quiz' | 'leaderboard' | 'my-room';

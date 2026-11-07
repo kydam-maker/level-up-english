@@ -21,13 +21,15 @@ interface QuizViewProps {
   progress: UserProgress;
   onSaveQuizResult: (record: QuizResultRecord) => void;
   onClearMistake: (questionId: string) => void;
+  onNavigateToLeaderboard?: () => void;
 }
 
 export const QuizView: React.FC<QuizViewProps> = ({
   initialTopicId,
   progress,
   onSaveQuizResult,
-  onClearMistake
+  onClearMistake,
+  onNavigateToLeaderboard
 }) => {
   const [selectedTopicId, setSelectedTopicId] = useState<string>(initialTopicId || 'all');
   const [selectedQuizType, setSelectedQuizType] = useState<'all' | 'meaning' | 'blank' | 'listening'>('all');
@@ -556,6 +558,15 @@ export const QuizView: React.FC<QuizViewProps> = ({
             >
               새로운 퀴즈 다시 풀기
             </button>
+
+            {onNavigateToLeaderboard && (
+              <button
+                onClick={onNavigateToLeaderboard}
+                className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm rounded-xl transition-colors flex items-center justify-center gap-1.5"
+              >
+                <span>🏆 실시간 랭킹 순위표 확인하기</span>
+              </button>
+            )}
 
             <button
               onClick={() => setQuizState('intro')}

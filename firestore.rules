@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidLeaderboardEntry(data) {
+      return data.keys().hasAll(['userName', 'score', 'wordsMastered', 'quizzesSolved', 'streak', 'updatedAt']) &&
+             data.keys().hasOnly(['id', 'userName', 'score', 'wordsMastered', 'quizzesSolved', 'streak', 'tier', 'updatedAt', 'userId']) &&
+             data.userName is string && data.userName.size() >= 1 && data.userName.size() <= 30 &&
+             data.score is number && data.score >= 0 && data.score <= 100000 &&
+             data.wordsMastered is number && data.wordsMastered >= 0 && data.wordsMastered <= 1000 &&
+             data.quizzesSolved is number && data.quizzesSolved >= 0 && data.quizzesSolved <= 10000 &&
+             data.streak is number && data.streak >= 0 && data.streak <= 3650 &&
+             (!('tier' in data) || (data.tier is string && data.tier.size() <= 30)) &&
+             data.updatedAt is string && data.updatedAt.size() <= 40;
+    }
+
+    // Leaderboard collection: real-time public read, validated create & update
+    match /leaderboard/{entryId} {
+      allow read: if true;
+      allow create: if isValidId(entryId) && isValidLeaderboardEntry(request.resource.data);
+      allow update: if isValidId(entryId) && isValidLeaderboardEntry(request.resource.data);
+      allow delete: if false;
+    }
+
+    // Test connection doc
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+  }
+}

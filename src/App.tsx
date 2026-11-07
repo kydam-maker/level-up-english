@@ -14,7 +14,8 @@ import { TopicSelector } from './components/TopicSelector';
 import { FlashcardStudy } from './components/FlashcardStudy';
 import { QuizView } from './components/QuizView';
 import { MyLearningRoom } from './components/MyLearningRoom';
-import { Calendar, BookOpen, HelpCircle, User, Sparkles } from 'lucide-react';
+import { LeaderboardView } from './components/LeaderboardView';
+import { Calendar, BookOpen, HelpCircle, User, Sparkles, Trophy } from 'lucide-react';
 import { soundEffects } from './utils/audio';
 
 export default function App() {
@@ -97,6 +98,7 @@ export default function App() {
               setSelectedTopicId(null);
               setActiveTab('topics');
             }}
+            onOpenLeaderboard={() => setActiveTab('leaderboard')}
           />
         )}
 
@@ -125,6 +127,14 @@ export default function App() {
             progress={progress}
             onSaveQuizResult={handleSaveQuizResult}
             onClearMistake={handleClearMistake}
+            onNavigateToLeaderboard={() => setActiveTab('leaderboard')}
+          />
+        )}
+
+        {activeTab === 'leaderboard' && (
+          <LeaderboardView
+            progress={progress}
+            onNavigateToQuiz={() => handleStartQuizFromAnywhere()}
           />
         )}
 
@@ -140,13 +150,13 @@ export default function App() {
       </main>
 
       {/* Mobile Bottom Navigation Bar (Thumb friendly for smartphone users) */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 flex items-center justify-around">
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-2 flex items-center justify-around">
         <button
           onClick={() => {
             soundEffects.playTap();
             setActiveTab('daily');
           }}
-          className={`flex flex-col items-center gap-1 p-1 min-w-[56px] ${
+          className={`flex flex-col items-center gap-1 p-1 min-w-[50px] ${
             activeTab === 'daily' ? 'text-amber-600 font-bold' : 'text-slate-500'
           }`}
         >
@@ -160,7 +170,7 @@ export default function App() {
             setSelectedTopicId(null);
             setActiveTab('topics');
           }}
-          className={`flex flex-col items-center gap-1 p-1 min-w-[56px] ${
+          className={`flex flex-col items-center gap-1 p-1 min-w-[50px] ${
             activeTab === 'topics' ? 'text-amber-600 font-bold' : 'text-slate-500'
           }`}
         >
@@ -173,7 +183,7 @@ export default function App() {
             soundEffects.playTap();
             setActiveTab('quiz');
           }}
-          className={`flex flex-col items-center gap-1 p-1 min-w-[56px] relative ${
+          className={`flex flex-col items-center gap-1 p-1 min-w-[50px] relative ${
             activeTab === 'quiz' ? 'text-amber-600 font-bold' : 'text-slate-500'
           }`}
         >
@@ -187,9 +197,22 @@ export default function App() {
         <button
           onClick={() => {
             soundEffects.playTap();
+            setActiveTab('leaderboard');
+          }}
+          className={`flex flex-col items-center gap-1 p-1 min-w-[50px] ${
+            activeTab === 'leaderboard' ? 'text-amber-600 font-bold' : 'text-slate-500'
+          }`}
+        >
+          <Trophy className="w-5 h-5" />
+          <span className="text-[10px]">랭킹</span>
+        </button>
+
+        <button
+          onClick={() => {
+            soundEffects.playTap();
             setActiveTab('my-room');
           }}
-          className={`flex flex-col items-center gap-1 p-1 min-w-[56px] ${
+          className={`flex flex-col items-center gap-1 p-1 min-w-[50px] ${
             activeTab === 'my-room' ? 'text-amber-600 font-bold' : 'text-slate-500'
           }`}
         >

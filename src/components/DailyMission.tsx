@@ -11,6 +11,7 @@ interface DailyMissionProps {
   onToggleBookmark: (id: string) => void;
   onStartQuiz: () => void;
   onBrowseAllTopics: () => void;
+  onOpenLeaderboard: () => void;
 }
 
 export const DailyMission: React.FC<DailyMissionProps> = ({
@@ -18,7 +19,8 @@ export const DailyMission: React.FC<DailyMissionProps> = ({
   onMarkLearned,
   onToggleBookmark,
   onStartQuiz,
-  onBrowseAllTopics
+  onBrowseAllTopics,
+  onOpenLeaderboard
 }) => {
   const [slowRate, setSlowRate] = useState(false);
   const [playingId, setPlayingId] = useState<string | null>(null);
@@ -129,6 +131,37 @@ export const DailyMission: React.FC<DailyMissionProps> = ({
 
         {/* Decorative circular element */}
         <div className="absolute -right-8 -bottom-10 w-48 h-48 rounded-full bg-white/10 pointer-events-none" />
+      </div>
+
+      {/* Real-time Leaderboard Link Card on First Screen */}
+      <div
+        onClick={onOpenLeaderboard}
+        className="cursor-pointer bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-white rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex items-center justify-between gap-4 group"
+      >
+        <div className="flex items-center gap-3.5 min-w-0">
+          <div className="w-11 h-11 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">
+            🏆
+          </div>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-sm sm:text-base text-white truncate">
+                실시간 랭킹 리더보드 확인하기
+              </span>
+              <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-bold text-amber-100 flex items-center gap-1 shrink-0">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />
+                <span>파이어베이스 실시간</span>
+              </span>
+            </div>
+            <p className="text-xs text-amber-100 truncate mt-0.5">
+              전국의 친구들과 실시간 점수를 비교하고 나의 랭킹을 등록해 보세요!
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-1 px-3.5 py-2 rounded-xl bg-white text-amber-900 font-extrabold text-xs shrink-0 group-hover:bg-amber-100 transition-colors shadow-2xs">
+          <span>순위표 열기</span>
+          <ArrowRight className="w-4 h-4" />
+        </div>
       </div>
 
       {/* Control bar: Audio speed toggle & View all */}

@@ -84,6 +84,18 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <button
+            onClick={() => handleNavClick('leaderboard')}
+            className={`px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5 ${
+              activeTab === 'leaderboard'
+                ? 'bg-amber-100 text-amber-900 font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <span>실시간 랭킹</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse hidden sm:inline" />
+          </button>
+
+          <button
             onClick={() => handleNavClick('my-room')}
             className={`px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 ${
               activeTab === 'my-room'

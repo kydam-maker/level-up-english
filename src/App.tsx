@@ -227,9 +227,19 @@ export default function App() {
           <p className="font-semibold text-slate-700">
             레벨업 잉글리시 · 초등학교 5·6학년 기초 영어 첫걸음
           </p>
-          <p className="text-slate-400">
-            매일 5분 작은 습관이 유창한 영어 자신감을 만듭니다.
-          </p>
+          <div className="flex items-center gap-3">
+            <a
+              href="/level-up-english-source.zip"
+              download="level-up-english-source.zip"
+              className="text-amber-700 hover:text-amber-900 font-bold underline transition-colors"
+            >
+              📦 전체 소스코드 다운로드 (.zip)
+            </a>
+            <span aria-hidden="true" className="text-slate-300">·</span>
+            <p className="text-slate-400">
+              매일 5분 작은 습관이 유창한 영어 자신감을 만듭니다.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
